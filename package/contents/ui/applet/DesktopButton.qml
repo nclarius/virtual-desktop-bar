@@ -247,7 +247,7 @@ Component {
                     if ((!ignoreMouseArea && mouseArea.containsMouse) || isDragged) {
                         return 1.0;
                     }
-                    return 0.75;
+                    return 0.5;
                 }
                 return 1.0;
             }
