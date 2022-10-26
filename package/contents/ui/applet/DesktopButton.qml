@@ -52,8 +52,29 @@ Component {
         Layout.fillHeight: !isVerticalOrientation
 
         clip: true
-        color: "transparent"
-        opacity: !config.AnimationsEnable ? 1 : 0
+
+        color: {
+            if (isCurrent && config.DesktopBackgroundsCustomColorForCurrentDesktop) {
+                return config.DesktopBackgroundsCustomColorForCurrentDesktop;
+            }
+            if (!isCurrent && isEmpty && config.DesktopBackgroundsCustomColorForIdleDesktops) {
+                return config.DesktopBackgroundsCustomColorForIdleDesktops;
+            }
+            if (!isCurrent && !isEmpty && config.DesktopBackgroundsCustomColorForOccupiedIdleDesktops) {
+                return config.DesktopBackgroundsCustomColorForOccupiedIdleDesktops;
+            }
+            if (isUrgent && config.DesktopBackgroundsCustomColorForDesktopsNeedingAttention) {
+                return config.DesktopBackgroundsCustomColorForDesktopsNeedingAttention;
+            }
+            return theme.backgroundColor;
+        }
+
+        Behavior on color {
+            enabled: config.AnimationsEnable
+            animation: ColorAnimation {
+                duration: animationColorDuration
+            }
+        }
 
         readonly property int tooltipWaitDuration: 800
         readonly property int animationWidthDuration: 100
@@ -117,33 +138,7 @@ Component {
                 }
             }
 
-            opacity: {
-                if (isCurrent) {
-                    return 1.0;
-                }
-                if ((!ignoreMouseArea && mouseArea.containsMouse) || isDragged) {
-                    return config.DesktopIndicatorsStyle == 5 ? 1.0 : 0.75;
-                }
-                if (config.DesktopIndicatorsDoNotOverrideOpacityOfCustomColors) {
-                    if ((isCurrent && config.DesktopIndicatorsCustomColorForCurrentDesktop) ||
-                        (isEmpty && config.DesktopIndicatorsCustomColorForIdleDesktops) ||
-                        (!isEmpty && config.DesktopIndicatorsCustomColorForOccupiedIdleDesktops) ||
-                        (isUrgent && config.DesktopIndicatorsCustomColorForDesktopsNeedingAttention)) {
-                        return 1.0;
-                    }
-                }
-                if (!isEmpty && config.DesktopIndicatorsDistinctForOccupiedIdleDesktops) {
-                    return config.DesktopIndicatorsStyle == 5 ? 1.0 : 0.5;
-                }
-                return config.DesktopIndicatorsStyle == 5 ? 0.5 : 0.25;
-            }
-
-            Behavior on opacity {
-                enabled: config.AnimationsEnable
-                animation: NumberAnimation {
-                    duration: animationOpacityDuration
-                }
-            }
+            opacity: 1.0;
 
             width: {
                 if (isVerticalOrientation) {
