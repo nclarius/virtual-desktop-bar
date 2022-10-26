@@ -4,7 +4,7 @@ Comment=Manage your virtual desktops
 Icon=virtualdesktopbar
 Type=Service
 
-X-KDE-PluginInfo-Name=org.kde.plasma.virtualdesktopbar
+X-KDE-PluginInfo-Name=org.kde.plasma.virtualdesktopbarforked
 X-KDE-PluginInfo-Version=1.5
 X-KDE-PluginInfo-Author=wsdfhjxc
 X-KDE-PluginInfo-Category=Windows and Tasks
