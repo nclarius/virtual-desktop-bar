@@ -248,9 +248,17 @@ Component {
 
             text: name
 
-            color: config.DesktopIndicatorsStyle == 5 ?
-                   indicator.color :
-                   config.DesktopLabelsCustomColor || theme.textColor
+            color: {
+                if (config.DesktopIndicatorsStyle == 5) {
+                    return indicator.color;
+                }
+                if (!isCurrent && config.DesktopLabelsDimForIdleDesktops) {
+                    if (!((!ignoreMouseArea && mouseArea.containsMouse) || isDragged)) {
+                        return theme.disabledTextColor;
+                    }
+                }
+                return config.DesktopLabelsCustomColor || theme.textColor
+            }
 
             Behavior on color {
                 enabled: config.AnimationsEnable
@@ -262,15 +270,6 @@ Component {
             opacity: {
                 if (config.DesktopIndicatorsStyle == 5) {
                     return indicator.opacity;
-                }
-                if (isCurrent) {
-                    return 1.0;
-                }
-                if (config.DesktopLabelsDimForIdleDesktops) {
-                    if ((!ignoreMouseArea && mouseArea.containsMouse) || isDragged) {
-                        return 1.0;
-                    }
-                    return 0.5;
                 }
                 return 1.0;
             }
