@@ -40,14 +40,11 @@ Item {
     property alias cfg_DesktopLabelsMaximumLength: desktopLabelsMaximumLengthSpinBox.value
     property alias cfg_DesktopLabelsDisplayAsUppercased: desktopLabelsDisplayAsUppercasedCheckBox.checked
 
-    // Desktop buttons
+    // Desktop backgrounds
     property string cfg_DesktopBackgroundsCustomColorForIdleDesktops
     property string cfg_DesktopBackgroundsCustomColorForCurrentDesktop
     property string cfg_DesktopBackgroundsCustomColorForOccupiedIdleDesktops
     property string cfg_DesktopBackgroundsCustomColorForDesktopsNeedingAttention
-    property alias cfg_DesktopBackgroundsDoNotOverrideOpacityOfCustomColors: DesktopBackgroundsDoNotOverrideOpacityOfCustomColorsCheckBox.checked
-    property alias cfg_DesktopBackgroundsDistinctForOccupiedIdleDesktops: DesktopBackgroundsDistinctForOccupiedIdleDesktopsCheckBox.checked
-    property alias cfg_DesktopBackgroundsDistinctForDesktopsNeedingAttention: DesktopBackgroundsDistinctForDesktopsNeedingAttentionCheckBox.checked
 
     // Desktop indicators
     property alias cfg_DesktopIndicatorsStyle: desktopIndicatorsStyleComboBox.currentIndex
