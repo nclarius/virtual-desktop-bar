@@ -119,6 +119,29 @@
       <default>false</default>
     </entry>
 
+    <!-- Appearance - Desktop backgrounds -->
+    <entry name="DesktopBackgroundsCustomColorForIdleDesktops" type="String">
+      <default></default>
+    </entry>
+    <entry name="DesktopBackgroundsCustomColorForCurrentDesktop" type="String">
+      <default></default>
+    </entry>
+    <entry name="DesktopBackgroundsCustomColorForOccupiedIdleDesktops" type="String">
+      <default></default>
+    </entry>
+    <entry name="DesktopBackgroundsCustomColorForDesktopsNeedingAttention" type="String">
+      <default></default>
+    </entry>
+    <entry name="DesktopBackgroundsDoNotOverrideOpacityOfCustomColors" type="Bool">
+      <default>false</default>
+    </entry>
+    <entry name="DesktopBackgroundsDistinctForOccupiedIdleDesktops" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="DesktopBackgroundsDistinctForDesktopsNeedingAttention" type="Bool">
+      <default>false</default>
+    </entry>
+
     <!-- Appearance - Desktop indicators -->
     <entry name="DesktopIndicatorsStyle" type="Int">
       <default>0</default>

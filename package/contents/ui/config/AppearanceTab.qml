@@ -40,6 +40,12 @@ Item {
     property alias cfg_DesktopLabelsMaximumLength: desktopLabelsMaximumLengthSpinBox.value
     property alias cfg_DesktopLabelsDisplayAsUppercased: desktopLabelsDisplayAsUppercasedCheckBox.checked
 
+    // Desktop buttons
+    property string cfg_DesktopBackgroundsCustomColorForIdleDesktops
+    property string cfg_DesktopBackgroundsCustomColorForCurrentDesktop
+    property string cfg_DesktopBackgroundsCustomColorForOccupiedIdleDesktops
+    property string cfg_DesktopBackgroundsCustomColorForDesktopsNeedingAttention
+
     // Desktop indicators
     property alias cfg_DesktopIndicatorsStyle: desktopIndicatorsStyleComboBox.currentIndex
     property alias cfg_DesktopIndicatorsStyleBlockRadius: desktopIndicatorsStyleBlockRadiusSpinBox.value
@@ -422,6 +428,150 @@ Item {
             id: desktopLabelsBoldFontForCurrentDesktopCheckBox
             text: "Set bold font for current desktop"
         }
+
+        SectionHeader {
+            text: "Desktop backgrounds"
+        }
+
+        RowLayout {
+            spacing: 0
+
+            CheckBox {
+                id: desktopBackgroundsCustomColorForIdleDesktopsCheckBox
+                checked: cfg_DesktopBackgroundsCustomColorForIdleDesktops
+                onCheckedChanged: cfg_DesktopBackgroundsCustomColorForIdleDesktops = checked ?
+                                  desktopBackgroundsCustomColorForIdleDesktopsButton.color : ""
+                text: "Custom color for idle desktops:"
+            }
+
+            ColorButton {
+                id: desktopBackgroundsCustomColorForIdleDesktopsButton
+                enabled: desktopBackgroundsCustomColorForIdleDesktopsCheckBox.checked
+                color: cfg_DesktopBackgroundsCustomColorForIdleDesktops || theme.textColor
+
+                colorAcceptedCallback: function(color) {
+                    cfg_DesktopBackgroundsCustomColorForIdleDesktops = color;
+                }
+            }
+        }
+
+        RowLayout {
+            spacing: 0
+
+            CheckBox {
+                id: desktopBackgroundsCustomColorForCurrentDesktopCheckBox
+                checked: cfg_DesktopBackgroundsCustomColorForCurrentDesktop
+                onCheckedChanged: cfg_DesktopBackgroundsCustomColorForCurrentDesktop = checked ?
+                                  desktopBackgroundsCustomColorForCurrentDesktopButton.color : ""
+                text: "Custom color for current desktop:"
+            }
+
+            ColorButton {
+                id: desktopBackgroundsCustomColorForCurrentDesktopButton
+                enabled: desktopBackgroundsCustomColorForCurrentDesktopCheckBox.checked
+                color: cfg_DesktopBackgroundsCustomColorForCurrentDesktop || theme.buttonFocusColor
+
+                colorAcceptedCallback: function(color) {
+                    cfg_DesktopBackgroundsCustomColorForCurrentDesktop = color;
+                }
+            }
+        }
+
+        RowLayout {
+            spacing: 0
+
+            CheckBox {
+                id: desktopBackgroundsCustomColorForOccupiedIdleDesktopsCheckBox
+                checked: cfg_DesktopBackgroundsCustomColorForOccupiedIdleDesktops
+                onCheckedChanged: cfg_DesktopBackgroundsCustomColorForOccupiedIdleDesktops = checked ?
+                                  desktopBackgroundsCustomColorForOccupiedIdleDesktopsButton.color : ""
+                text: "Custom color for occupied idle desktops:"
+            }
+
+            ColorButton {
+                id: desktopBackgroundsCustomColorForOccupiedIdleDesktopsButton
+                enabled: desktopBackgroundsCustomColorForOccupiedIdleDesktopsCheckBox.checked
+                color: cfg_DesktopBackgroundsCustomColorForOccupiedIdleDesktops || theme.textColor
+
+                colorAcceptedCallback: function(color) {
+                    cfg_DesktopBackgroundsCustomColorForOccupiedIdleDesktops = color;
+                }
+            }
+        }
+
+        RowLayout {
+            spacing: 0
+
+            CheckBox {
+                id: desktopBackgroundsCustomColorForDesktopsNeedingAttentionCheckBox
+                checked: cfg_DesktopBackgroundsCustomColorForDesktopsNeedingAttention
+                onCheckedChanged: cfg_DesktopBackgroundsCustomColorForDesktopsNeedingAttention = checked ?
+                                  desktopBackgroundsCustomColorForDesktopsNeedingAttentionButton.color : ""
+                text: "Custom color for desktops needing attention:"
+            }
+
+            ColorButton {
+                id: desktopBackgroundsCustomColorForDesktopsNeedingAttentionButton
+                enabled: desktopBackgroundsCustomColorForDesktopsNeedingAttentionCheckBox.checked
+                color: cfg_DesktopBackgroundsCustomColorForDesktopsNeedingAttention || theme.textColor
+
+                colorAcceptedCallback: function(color) {
+                    cfg_DesktopBackgroundsCustomColorForDesktopsNeedingAttention = color;
+                }
+            }
+        }
+
+        RowLayout {
+            spacing: 0
+
+            CheckBox {
+                id: desktopBackgroundsDoNotOverrideOpacityOfCustomColorsCheckBox
+                enabled: desktopBackgroundsCustomColorForCurrentDesktopCheckBox.checked ||
+                         desktopBackgroundsCustomColorForIdleDesktopsCheckBox.checked ||
+                         desktopBackgroundsCustomColorForOccupiedIdleDesktopsCheckBox.checked ||
+                         desktopBackgroundsCustomColorForDesktopsNeedingAttentionCheckBox.checked
+                text: "Do not override opacity of custom colors"
+            }
+
+            HintIcon {
+                tooltipText: !desktopBackgroundsDoNotOverrideOpacityOfCustomColorsCheckBox.enabled ?
+                             "Not available if custom colors are not used" :
+                             "Alpha channel of custom colors will be applied without any modifications"
+            }
+        }
+
+        RowLayout {
+            spacing: 0
+
+            CheckBox {
+                id: desktopBackgroundsDistinctForOccupiedIdleDesktopsCheckBox
+                enabled: !cfg_DesktopBackgroundsCustomColorForOccupiedIdleDesktops ||
+                         !cfg_DesktopBackgroundsDoNotOverrideOpacityOfCustomColors
+                text: "Distinct indicators for occupied idle desktops"
+            }
+
+            HintIcon {
+                visible: !desktopBackgroundsDistinctForOccupiedIdleDesktopsCheckBox.enabled
+                tooltipText: "Not available if a custom color is used and overriding opacity of custom colors is blocked"
+            }
+        }
+
+        RowLayout {
+            spacing: 0
+
+            CheckBox {
+                id: desktopBackgroundsDistinctForDesktopsNeedingAttentionCheckBox
+                enabled: !cfg_DesktopBackgroundsCustomColorForDesktopsNeedingAttention ||
+                         !cfg_DesktopBackgroundsDoNotOverrideOpacityOfCustomColors
+                text: "Distinct indicators for desktops needing attention"
+            }
+
+            HintIcon {
+                visible: !desktopBackgroundsDistinctForDesktopsNeedingAttentionCheckBox.enabled
+                tooltipText: "Not available if a custom color is used and overriding opacity of custom colors is blocked"
+            }
+        }
+
 
         SectionHeader {
             text: "Desktop indicators"
